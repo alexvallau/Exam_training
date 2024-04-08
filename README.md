@@ -130,9 +130,10 @@ sendMqttMessage('banque/askCheck', 'check;');
 Dans ce fichier, on va coder le fait de: 
 * S'abonner à un topic
 * traiter des messages du type add;30 ou sub;30
+
+  
 Concrètement ici, notre code ne fait que recevoir des messages du type ajouter ou retirer, afin d'ajouter le nombre à une variable globale "compte_en_banque". Il ne renvoit encore rien à notre serveur js
 
-On commence par importer toute cette merde qui nous sera utile pour plus tard:
 ``` python
 import paho.mqtt.client as mqtt
 
@@ -158,11 +159,8 @@ def on_message(client, userdata, message):
         compte_en_banque -= int(message[1])
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
-
-
 # Connect to MQTT broker
 client.connect(broker_address, broker_port)
-
 # Subscribe to the topic
 #client.subscribe(topic)
 for topic in topics:
@@ -177,12 +175,14 @@ try:
         pass
 except KeyboardInterrupt:
     pass
-
 # Disconnect from MQTT broker
 client.loop_stop()
 client.disconnect()
-
-
-
 ```
+## Intéraction entre banque.py(publisher) et server.js(suscriber)
+On récapitule:
+* Ma page web communique avec mon serveur JS, on peut récupérer des sommes d'argent et les ajouter/ retirer de notre compte en banque
+* Il faut maintenant que notre client puisse récupérer son compte en banque sur sa page web.
+* Pour cela il faut que notre banque.py, puisse communiquer la variable ``` py compte_en_banque```
+* Il faut donc que banque.py devienne un publisher et server.js un subcriber.
   
