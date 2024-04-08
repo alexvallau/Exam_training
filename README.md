@@ -132,10 +132,10 @@ Dans ce fichier, on va coder le fait de:
 * traiter des messages du type add;30 ou sub;30
 
 On commence par importer toute cette merde qui nous sera utile pour plus tard:
-```` python
+``` python
 import paho.mqtt.client as mqtt
 
-# MQTT broker details
+# Tous les topics/ports/adresses utiles, pour mtnt ou le turfu
 broker_address = "localhost"
 broker_port = 1883
 topic = "banque"
@@ -144,5 +144,49 @@ topicSub = "banque/sub"
 topicPublisher= "banque/askCheck"
 topics = [topicAdd, topicSub, topic, topicPublisher]
 topicToPublish = "compte_en_banque"
+
+#Fonction qui récupère le message, split ";" et effectue l'opération
+def on_message(client, userdata, message):
+    global compte_en_banque
+    message = message.payload.decode()
+    message = message.split(";")
+    print("Message reçu:: ", message)
+    if message[0] == "add":
+        compte_en_banque += int(message[1])
+    elif message[0] == "sub":
+        compte_en_banque -= int(message[1])
+    elif message[0] == "check":
+        print("Demande de solde")
+        msg_info=mqttc.publish("compte_en_banque", str(compte_en_banque), qos=0)
+        unacked_publish.add(msg_info.mid)
+        msg_info.wait_for_publish()
+
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+
+
+# Connect to MQTT broker
+client.connect(broker_address, broker_port)
+
+# Subscribe to the topic
+#client.subscribe(topic)
+for topic in topics:
+    client.subscribe(topic)
+# Start the MQTT loop to receive messages
+client.loop_start()
+client.on_message = on_message
+
+# Keep the client running until interrupted
+try:
+    while True:
+        pass
+except KeyboardInterrupt:
+    pass
+
+# Disconnect from MQTT broker
+client.loop_stop()
+client.disconnect()
+
+
+
 ```
   
