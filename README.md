@@ -214,5 +214,25 @@ mqttc.loop_start()
 mqttc.on_publish = on_publish
 ```
 #### server.js
+Il faut maintenant que notre server.js s'abonne à notre topic, il le fait de cette façon:
+
+``` js
+// s'abonner au topic compte_en_banque, afin de récupérer le compte en banque
+var client = mqtt.connect('mqtt://localhost');
+client.on('connect', function(){
+    console.log('connected to the python publisher');
+    //s'abonner au topic compte_en_banque
+    client.subscribe('compte_en_banque');
+});
+
+//récupérer le message envoyé par la banque WEBSOCKET
+client.on('message', function(topic, message){
+    console.log('Compte en banque reçu dans serveur: ' + message.toString());
+    compte_en_banque = parseInt(message.toString());
+    //sert à envoyer le compte en banque à mon html, pour l'afficher
+    io.emit('setBankAccount', compte_en_banque);
+});
+``` 
+
 
 
