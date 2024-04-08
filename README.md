@@ -234,5 +234,23 @@ client.on('message', function(topic, message){
 });
 ``` 
 
+## Intéraction finale entre serverjs et html
+Une fois que l'on a récupéré notre variable compte en banque , elle a été émise vers notre page html dans le code précédent.
+
+### server.js
+``` js
+ io.emit('setBankAccount', compte_en_banque);
+```
+
+et pour afficher en live sur la page:
+
+``` js
+        socket.on('setBankAccount', function(data) {
+            document.getElementById('compte_en_banque').innerHTML =  + data;
+            console.log("Compte en banque : "+data);
+        })
+```
+
+
 
 
