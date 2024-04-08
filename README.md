@@ -36,6 +36,7 @@ http.listen(8080, function(){
     <button id="check">Voir compte</button>
 ```
 ## Coder l'intéraction entre la page web html et le javascript(websocket)
+A la fin de cette étape, on sera capable de cliquer sur les boutons de la page web. Ces boutons seront envoyés à notre serveur javascript. Quand j'appuie sur ajouter ou retirer, le contenu du champs "number" sera envoyé au serveur, qui le traitera.
 #### ServerJS
 ``` js
 io.on('connection', function(socket){
