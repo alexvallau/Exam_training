@@ -35,6 +35,35 @@ http.listen(8080, function(){
     <button id="remove">Retirer</button>
     <button id="check">Voir compte</button>
 ```
-### Flux de message MQTT
+## Coder l'intéraction entre la page web html et le javascript(websocket)
+``` js
+io.on('connection', function(socket){
+    console.log('a user connected');
+
+    //On code ensuite les différents boutons 
+    socket.on('buttonClickedAdd', function(amount){
+        console.log('button clicked add: ' + amount);
+        sendMqttMessage('banque/add', 'add;'+amount);
+        
+    });
+
+    //se connecte au websocket pour récupérer les messages pour retirer de l'argent, 
+    //les retransmets à la banque WEBSOCKET + MQTT
+    socket.on('buttonClickedSub', function(amount){
+        console.log('button clicked substraction: ' + amount);
+        sendMqttMessage('banque/sub', 'sub;'+amount);
+    });
+
+
+    //se connecte au websocket pour récupérer les messages pour demander le compte 
+    //en banque, les retransmets à la banque WEBSOCKET + MQTT
+    socket.on('buttonClickedCheck', function(){
+        console.log('Button clicked check');
+        sendMqttMessage('banque/askCheck', 'check;');
+    });
+
+});
+``` 
+
 
 #### Server JS
