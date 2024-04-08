@@ -244,6 +244,8 @@ Une fois que l'on a récupéré notre variable compte en banque , elle a été �
 
 et pour afficher en live sur la page:
 
+### index.html
+
 ``` js
         socket.on('setBankAccount', function(data) {
             document.getElementById('compte_en_banque').innerHTML =  + data;
