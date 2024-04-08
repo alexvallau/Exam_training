@@ -185,4 +185,34 @@ On récapitule:
 * Il faut maintenant que notre client puisse récupérer son compte en banque sur sa page web.
 * Pour cela il faut que notre banque.py, puisse communiquer la variable ``` compte_en_banque```
 * Il faut donc que banque.py devienne un publisher et server.js un subcriber.
-  
+
+#### banque.py
+On a décidé ici que le topic sur lequel banque.py publiera est la variable suivante:
+``` python
+topicToPublish = "compte_en_banque"
+```
+Il faudra ajouetr les élements suivants à banque.py:
+```python
+def on_publish(client, userdata, mid, reason_code, properties):
+    # reason_code and properties will only be present in MQTTv5. It's always unset in MQTTv3
+    try:
+        userdata.remove(mid)
+    except KeyError:
+        print("on_publish() is called with a mid not present in unacked_publish")
+######################Cette elif supplémentaire à la fonction on_message###############
+    elif message[0] == "check":
+        print("Demande de solde")
+        msg_info=mqttc.publish("compte_en_banque", str(compte_en_banque), qos=0)
+        unacked_publish.add(msg_info.mid)
+        msg_info.wait_for_publish()
+#######################################################################################
+unacked_publish = set()
+mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+mqttc.user_data_set(unacked_publish)
+mqttc.connect("localhost")
+mqttc.loop_start()
+mqttc.on_publish = on_publish
+```
+#### server.js
+
+
