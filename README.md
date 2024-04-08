@@ -19,7 +19,22 @@ http.listen(8080, function(){
 });
 ```
 
-
+#### index.html:
+``` html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Number Input</title>
+</head>
+<body>
+    <h1>Compte en banque</h1>
+    <div id="compte_en_banque"></div>
+    <input type="number" id="numberInput" placeholder="Enter a number">
+    <br><br>
+    <button id="add" >Ajouter</button>
+    <button id="remove">Retirer</button>
+    <button id="check">Voir compte</button>
+```
 ### Flux de message MQTT
 
 #### Server JS
