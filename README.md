@@ -36,6 +36,7 @@ http.listen(8080, function(){
     <button id="check">Voir compte</button>
 ```
 ## Coder l'intéraction entre la page web html et le javascript(websocket)
+#### ServerJS
 ``` js
 io.on('connection', function(socket){
     console.log('a user connected');
@@ -65,5 +66,39 @@ io.on('connection', function(socket){
 });
 ``` 
 
+#### html
+Ici on ajoute des évnements sur le "click des boutons". 
+``` html
+<script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('ws://localhost:8080');
+        socket.on('setBankAccount', function(data) {
+            document.getElementById('compte_en_banque').innerHTML =  + data;
+            console.log("Compte en banque : "+data);
+        });
+        //on récupère le nombre pour l'addition
+        document.getElementById('add').addEventListener('click', function() {
+            var number = document.getElementById('numberInput').value;
+            //check if the input is a number not null
+            if (number == "" || isNaN(number)) {
+                alert("Please enter a valid number");
+                return;
+            }
+            else {socket.emit('buttonClickedAdd', number);}
+        });
+        //on récupère le nombre pour la soustraction
+        document.getElementById('remove').addEventListener('click', function() {
+            var number = document.getElementById('numberInput').value;
+            //check if the input is a number not null
+            if (number == "" || isNaN(number)) {
+                alert("Please enter a valid number");
+                return;
+            }
+            else {socket.emit('buttonClickedSub', number);}
+        });
+        document.getElementById('check').addEventListener('click', function() {
+            socket.emit('buttonClickedCheck');
+        });
+``` 
 
 #### Server JS
