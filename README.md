@@ -68,7 +68,7 @@ io.on('connection', function(socket){
 
 #### html
 Ici on ajoute des évnements sur le "click des boutons". 
-``` html
+``` JS
 <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('ws://localhost:8080');
