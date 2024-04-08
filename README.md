@@ -130,6 +130,7 @@ sendMqttMessage('banque/askCheck', 'check;');
 Dans ce fichier, on va coder le fait de: 
 * S'abonner à un topic
 * traiter des messages du type add;30 ou sub;30
+Concrètement ici, notre code ne fait que recevoir des messages du type ajouter ou retirer, afin d'ajouter le nombre à une variable globale "compte_en_banque". Il ne renvoit encore rien à notre serveur js
 
 On commence par importer toute cette merde qui nous sera utile pour plus tard:
 ``` python
