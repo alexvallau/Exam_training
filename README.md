@@ -183,7 +183,6 @@ client.disconnect()
 On récapitule:
 * Ma page web communique avec mon serveur JS, on peut récupérer des sommes d'argent et les ajouter/ retirer de notre compte en banque
 * Il faut maintenant que notre client puisse récupérer son compte en banque sur sa page web.
-* Pour cela il faut que notre banque.py, puisse communiquer la variable ``` py
-  compte_en_banque```
+* Pour cela il faut que notre banque.py, puisse communiquer la variable ``` python compte_en_banque```
 * Il faut donc que banque.py devienne un publisher et server.js un subcriber.
   
