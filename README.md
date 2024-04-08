@@ -99,6 +99,8 @@ Ici on ajoute des évnements sur le "click des boutons".
         document.getElementById('check').addEventListener('click', function() {
             socket.emit('buttonClickedCheck');
         });
+
+    </script>
 ``` 
 
 #### Server JS
