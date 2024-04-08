@@ -126,3 +126,23 @@ sendMqttMessage('banque/add', 'add;'+amount);
 sendMqttMessage('banque/sub', 'sub;'+amount);
 sendMqttMessage('banque/askCheck', 'check;');
 ``` 
+#### banque.py
+Dans ce fichier, on va coder le fait de: 
+* S'abonner à un topic
+* traiter des messages du type add;30 ou sub;30
+
+On commence par importer toute cette merde qui nous sera utile pour plus tard:
+```` python
+import paho.mqtt.client as mqtt
+
+# MQTT broker details
+broker_address = "localhost"
+broker_port = 1883
+topic = "banque"
+topicAdd = "banque/add"
+topicSub = "banque/sub"
+topicPublisher= "banque/askCheck"
+topics = [topicAdd, topicSub, topic, topicPublisher]
+topicToPublish = "compte_en_banque"
+```
+  
