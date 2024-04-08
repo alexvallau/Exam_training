@@ -156,12 +156,6 @@ def on_message(client, userdata, message):
         compte_en_banque += int(message[1])
     elif message[0] == "sub":
         compte_en_banque -= int(message[1])
-#Cette partie est utile pour le prochain chapitre, pour l'instant
-    elif message[0] == "check":
-        print("Demande de solde")
-        msg_info=mqttc.publish("compte_en_banque", str(compte_en_banque), qos=0)
-        unacked_publish.add(msg_info.mid)
-        msg_info.wait_for_publish()
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 
