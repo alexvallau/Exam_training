@@ -144,7 +144,7 @@ topicSub = "banque/sub"
 topicPublisher= "banque/askCheck"
 topics = [topicAdd, topicSub, topic, topicPublisher]
 topicToPublish = "compte_en_banque"
-
+compte_en_banque = 0
 #Fonction qui récupère le message, split ";" et effectue l'opération
 def on_message(client, userdata, message):
     global compte_en_banque
@@ -155,6 +155,7 @@ def on_message(client, userdata, message):
         compte_en_banque += int(message[1])
     elif message[0] == "sub":
         compte_en_banque -= int(message[1])
+#Cette partie est utile pour le prochain chapitre, pour l'instant
     elif message[0] == "check":
         print("Demande de solde")
         msg_info=mqttc.publish("compte_en_banque", str(compte_en_banque), qos=0)
