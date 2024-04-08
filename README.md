@@ -104,4 +104,24 @@ Ici on ajoute des évnements sur le "click des boutons".
     </script>
 ``` 
 
-#### Server JS
+## Coder l'intéraction entre notre serveur JS(publisher) et notre code python (subscriber).
+#### Server.js
+On commence par coder une fonction qui va prendre en argument un topic et un message.
+```js
+//Fonction qui envoie un message mqtt à la banque
+function sendMqttMessage(topic, message){
+    var client = mqtt.connect('mqtt://localhost');
+    client.on('connect', function(){
+        client.publish(topic, message);
+        client.end();
+    });
+}
+```
+
+Cette fonction sera ensuite utilisée dans "io.on"(fonction vue précédemment):
+ou l'on publiera les messages de type:
+``` js
+sendMqttMessage('banque/add', 'add;'+amount);
+sendMqttMessage('banque/sub', 'sub;'+amount);
+sendMqttMessage('banque/askCheck', 'check;');
+``` 
