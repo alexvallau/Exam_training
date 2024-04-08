@@ -105,6 +105,7 @@ Ici on ajoute des évnements sur le "click des boutons".
 ``` 
 
 ## Coder l'intéraction entre notre serveur JS(publisher) et notre code python (subscriber).
+Maintenant que l'on a récupéré les bouton, à savoir que l'utilisateur appuie sur +/- ou "consulter", il faut maintenant les envoyer à la banque, afin que l'on puisse ajouter de l'argent sur un solde, retirer de l'argent ou tout simplement consulter le solde.
 #### Server.js
 On commence par coder une fonction qui va prendre en argument un topic et un message.
 ```js
